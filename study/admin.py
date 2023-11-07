@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from study.models import Study, Materials, Students
+from study.models import Study, Materials
 
 
 @admin.register(Study)
@@ -11,11 +11,6 @@ class StudyAdmin(admin.ModelAdmin):
 @admin.register(Materials)
 class MaterialsAdmin(admin.ModelAdmin):
     list_display = ('title', 'study_materials', 'autor')
-
-
-@admin.register(Students)
-class StudentsAdmin(admin.ModelAdmin):
-    list_display = ('email', 'comment')
 
 
 

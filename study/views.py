@@ -1,10 +1,9 @@
-from django.shortcuts import render
 from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView
 from rest_framework.permissions import IsAuthenticated
 
-from study.models import Study, Materials, Students
+from study.models import Study, Materials
 from study.paginators import Pagination
-from study.serializers import StudySerializer, MaterialsSerializer, StudentsSerializer
+from study.serializers import StudySerializer, MaterialsSerializer
 
 
 class StudyListView(ListAPIView):
@@ -15,6 +14,13 @@ class StudyListView(ListAPIView):
     pagination_class = Pagination
     permission_classes = [IsAuthenticated]
 
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_superuser:
+            return Study.objects.all()
+        else:
+            return Study.objects.filter(owner=user)
+
 
 class StudyDetailView(RetrieveAPIView):
     """ Study list API View """
@@ -22,6 +28,13 @@ class StudyDetailView(RetrieveAPIView):
     serializer_class = StudySerializer
     queryset = Study.objects.all()
     permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_superuser:
+            return Study.objects.all()
+        else:
+            return Study.objects.filter(owner=user)
 
 
 class StudyCreateView(CreateAPIView):
@@ -39,6 +52,13 @@ class StudyUpdateView(UpdateAPIView):
     queryset = Study.objects.all()
     permission_classes = [IsAuthenticated]
 
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_superuser:
+            return Study.objects.all()
+        else:
+            return Study.objects.filter(owner=user)
+
 
 class StudyDeleteView(DestroyAPIView):
     """ Study delete API View """
@@ -46,6 +66,13 @@ class StudyDeleteView(DestroyAPIView):
     serializer_class = StudySerializer
     queryset = Study.objects.all()
     permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_superuser:
+            return Study.objects.all()
+        else:
+            return Study.objects.filter(owner=user)
 
 
 class MaterialsListView(ListAPIView):
@@ -58,7 +85,7 @@ class MaterialsListView(ListAPIView):
 
 
 class MaterialsDetailView(RetrieveAPIView):
-    """ Materials list API View """
+    """ Materials retrieve API View """
 
     serializer_class = MaterialsSerializer
     queryset = Materials.objects.all()
@@ -88,43 +115,3 @@ class MaterialsDeleteView(DestroyAPIView):
     queryset = Materials.objects.all()
     permission_classes = [IsAuthenticated]
 
-
-class StudentsListView(ListAPIView):
-    """ Students list API View """
-
-    serializer_class = StudentsSerializer
-    queryset = Students.objects.all()
-    pagination_class = Pagination
-    permission_classes = [IsAuthenticated]
-
-
-class StudentsDetailView(RetrieveAPIView):
-    """ Students list API View """
-
-    serializer_class = StudentsSerializer
-    queryset = Students.objects.all()
-    permission_classes = [IsAuthenticated]
-
-
-class StudentsCreateView(CreateAPIView):
-    """ Students create API View """
-
-    serializer_class = StudentsSerializer
-    queryset = Students.objects.all()
-    permission_classes = [IsAuthenticated]
-
-
-class StudentsUpdateView(UpdateAPIView):
-    """ Students update API View """
-
-    serializer_class = StudentsSerializer
-    queryset = Study.objects.all()
-    permission_classes = [IsAuthenticated]
-
-
-class StudentsDeleteView(DestroyAPIView):
-    """ Students delete API View """
-
-    serializer_class = StudentsSerializer
-    queryset = Students.objects.all()
-    permission_classes = [IsAuthenticated]
