@@ -34,6 +34,7 @@ class Materials(models.Model):
 
 class Test(models.Model):
     title = models.CharField(max_length=100, verbose_name='название теста')
+    test_materials = models.ForeignKey(Materials, **NULLABLE, on_delete=models.CASCADE, verbose_name='материалы теста')
     description = models.TextField(**NULLABLE, verbose_name='описание теста')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='время создания')
 
