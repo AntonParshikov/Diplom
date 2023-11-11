@@ -40,7 +40,7 @@ def user_testing(user, test):
 
 # Пример использования функции
 # Предположим, что у нас есть пользователь user и тест test
-user_instance = User.objects.get(id=1)
-test_instance = Test.objects.get(id=1)
-
-user_testing(user=user_instance, test=test_instance)
+# user_instance = User.objects.get(id=1)
+# test_instance = Test.objects.get(id=1)
+#
+# user_testing(user=user_instance, test=test_instance)
