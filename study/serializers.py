@@ -5,6 +5,7 @@ from study.models import Study, Materials, Test, Question, Answer
 
 class StudySerializer(serializers.ModelSerializer):
     class Meta:
+
         model = Study
         fields = '__all__'
 
